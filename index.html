@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matthew T. Ferreira, PhD — Strategy &amp; Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#18160f;
+    --ink-soft:#4a473d;
+    --paper:#f0e9da;
+    --paper-hi:#f8f3e7;
+    --moss:#3e4c2b;
+    --moss-deep:#2b3520;
+    --ochre:#a9701e;
+    --ochre-deep:#7c5215;
+    --line:#c9bfa2;
+    --line-soft:#dcd3ba;
+    --night:#161c14;
+    --night-2:#1f2819;
+    --paper-on-night:#e9e2d1;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.06em;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--moss);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background:var(--moss);
+    display:inline-block;
+  }
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  /* ---------- background texture ---------- */
+  .grain{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:0.035;
+    z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(240,233,218,0.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:18px;
+    padding-bottom:18px;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:19px;
+    letter-spacing:-0.01em;
+  }
+  .logo span{color:var(--moss);}
+  .navlinks{
+    display:flex;
+    gap:30px;
+    list-style:none;
+    margin:0; padding:0;
+  }
+  .navlinks a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--ink-soft);
+    border-bottom:1px solid transparent;
+    padding-bottom:3px;
+    transition:color .2s, border-color .2s;
+  }
+  .navlinks a:hover{color:var(--moss); border-color:var(--moss);}
+  .navcta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--paper-hi);
+    background:var(--moss);
+    padding:9px 16px;
+    border-radius:2px;
+    transition:background .2s;
+  }
+  .navcta:hover{background:var(--moss-deep);}
+  @media (max-width:760px){ .navlinks{display:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:110px 0 100px;
+    overflow:hidden;
+  }
+  .stampfield{
+    position:relative;
+    height:150px;
+    margin-bottom:36px;
+  }
+  .stamp{
+    position:absolute;
+    font-family:'IBM Plex Mono', monospace;
+    text-transform:uppercase;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    opacity:0.92;
+    user-select:none;
+  }
+  .stamp .top-arc, .stamp .bottom-arc{font-size:9px; letter-spacing:0.24em;}
+  .stamp .big{font-size:20px; font-weight:600; letter-spacing:0.08em; margin:4px 0;}
+  .stamp-circle{
+    width:132px; height:132px;
+    border:2px solid var(--ochre);
+    border-radius:50%;
+    color:var(--ochre);
+    left:0; top:6px;
+    transform:rotate(-9deg);
+    animation:stampin .7s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  .stamp-circle::before{
+    content:"";
+    position:absolute; inset:8px;
+    border:1px solid var(--ochre);
+    border-radius:50%;
+  }
+  .stamp-rect{
+    width:190px; height:96px;
+    border:2px solid var(--moss);
+    color:var(--moss);
+    left:150px; top:34px;
+    transform:rotate(6deg);
+    padding:10px;
+    animation:stampin .7s .12s cubic-bezier(.2,1.4,.4,1) both;
+  }
+  @keyframes stampin{
+    from{opacity:0; transform:scale(1.5) rotate(0deg);}
+  }
+  @media (max-width:640px){
+    .stampfield{transform:scale(0.72); transform-origin:left top; height:110px;}
+  }
+
+  .hero h1{
+    font-size:clamp(34px, 5.4vw, 58px);
+    line-height:1.08;
+    max-width:820px;
+  }
+  .hero p.lede{
+    font-size:19px;
+    color:var(--ink-soft);
+    max-width:640px;
+    margin-top:26px;
+  }
+  .hero-cta{
+    margin-top:38px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--paper-hi);
+    background:var(--ink);
+    padding:14px 26px;
+    border-radius:2px;
+    transition:transform .2s, background .2s;
+    display:inline-block;
+  }
+  .btn-primary:hover{background:var(--moss-deep); transform:translateY(-2px);}
+  .btn-ghost{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--ink);
+    border-bottom:1px solid var(--ink);
+    padding-bottom:2px;
+  }
+
+  /* ---------- section shell ---------- */
+  section{
+    position:relative;
+    padding:86px 0;
+    border-bottom:1px solid var(--line);
+  }
+  section.dark{
+    background:var(--night);
+    color:var(--paper-on-night);
+    border-bottom:1px solid #000;
+  }
+  section.dark h1, section.dark h2, section.dark h3{color:var(--paper-on-night);}
+  section.dark .eyebrow{color:#9fb37e;}
+  section.dark .eyebrow::before{background:#9fb37e;}
+
+  .reveal{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:50px;
+  }
+  .about-grid .label-col{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    line-height:2.1;
+  }
+  .about-grid .label-col b{color:var(--ink); display:block;}
+  .dropcap{
+    font-size:20px;
+  }
+  .dropcap::first-letter{
+    font-family:'Fraunces', serif;
+    font-size:64px;
+    font-weight:600;
+    float:left;
+    line-height:0.8;
+    padding:6px 10px 0 0;
+    color:var(--moss);
+  }
+  @media (max-width:760px){
+    .about-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- two tracks ---------- */
+  .tracks{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    border:1px solid var(--line);
+    margin-top:10px;
+    position:relative;
+  }
+  .track{
+    padding:44px 40px;
+    position:relative;
+    transition:transform .4s cubic-bezier(.2,.8,.3,1), box-shadow .4s ease, opacity .4s ease, background .4s ease;
+    will-change:transform;
+  }
+  .track:hover{
+    transform:translateY(-8px);
+    box-shadow:0 24px 48px -24px rgba(22,20,15,0.35);
+    z-index:2;
+    background:var(--paper-hi);
+  }
+  .tracks:hover .track:not(:hover){opacity:0.5; filter:saturate(0.7);}
+  .track + .track{border-left:1px solid var(--line);}
+  .track .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border:1px solid currentColor;
+    display:inline-block;
+    margin-bottom:20px;
+    border-radius:2px;
+    transition:transform .3s ease, background .3s ease, color .3s ease;
+  }
+  .track.strategy .tag{color:var(--moss);}
+  .track.science .tag{color:var(--ochre);}
+  .track:hover .tag{transform:scale(1.06);}
+  .track.strategy:hover .tag{background:var(--moss); color:var(--paper-hi);}
+  .track.science:hover .tag{background:var(--ochre); color:var(--paper-hi);}
+  .track h3{font-size:24px; margin-bottom:18px;}
+  .track ul{margin:0 0 26px; padding-left:20px;}
+  .track li{
+    margin-bottom:8px;
+    color:var(--ink-soft);
+    transition:transform .25s ease, color .25s ease;
+  }
+  .track li:hover{transform:translateX(6px); color:var(--ink);}
+  .track .eng{
+    font-size:15px;
+    border-top:1px dashed var(--line);
+    padding-top:20px;
+  }
+  .track .eng b{display:block; color:var(--ink); font-family:'Fraunces', serif; font-weight:600; font-size:16px; margin-bottom:4px;}
+  .track a.inline-link{color:var(--moss); text-decoration:underline; text-underline-offset:3px;}
+  .track.science a.inline-link{color:var(--ochre-deep);}
+  .stat-row{
+    display:flex;
+    gap:26px;
+    margin-top:22px;
+    flex-wrap:wrap;
+  }
+  .stat{font-family:'IBM Plex Mono', monospace; transition:transform .3s ease;}
+  .track:hover .stat{transform:translateY(-2px);}
+  .stat .num{font-size:26px; font-weight:600; color:var(--ochre-deep); display:block; font-variant-numeric:tabular-nums;}
+  .track.strategy .stat .num{color:var(--moss);}
+  .stat .lab{font-size:11px; color:var(--ink-soft); letter-spacing:0.05em;}
+  @media (max-width:760px){
+    .tracks{grid-template-columns:1fr;}
+    .track + .track{border-left:none; border-top:1px solid var(--line);}
+    .tracks:hover .track:not(:hover){opacity:1; filter:none;}
+    .track:hover{transform:none;}
+  }
+
+  /* ---------- ledger / experience ---------- */
+  .ledger{margin-top:20px;}
+  .ledger-row{
+    display:grid;
+    grid-template-columns:190px 1fr;
+    gap:30px;
+    padding:26px 0;
+    border-top:1px solid rgba(233,226,209,0.16);
+  }
+  .ledger-row:last-child{border-bottom:1px solid rgba(233,226,209,0.16);}
+  .ledger-row .when{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:#9fb37e;
+    padding-top:4px;
+  }
+  .ledger-row h3{font-size:20px; margin-bottom:8px; color:var(--paper-on-night);}
+  .ledger-row p{margin:0; color:#c9c2ac; font-size:15.5px;}
+  .ledger-row a{color:#c7d6a9; text-decoration:underline; text-underline-offset:3px;}
+  @media (max-width:640px){
+    .ledger-row{grid-template-columns:1fr; gap:8px;}
+  }
+
+  /* ---------- academic / bibliography ---------- */
+  .edu-list{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+    margin:26px 0 50px;
+  }
+  .edu-item{
+    border:1px solid var(--line);
+    padding:22px;
+    background:var(--paper-hi);
+  }
+  .edu-item .deg{font-family:'Fraunces', serif; font-weight:600; font-size:17px;}
+  .edu-item .inst{font-size:14px; color:var(--ink-soft); margin-top:4px;}
+  .edu-item .yr{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ochre-deep); margin-top:10px;}
+  @media (max-width:760px){ .edu-list{grid-template-columns:1fr;} }
+
+  .biblio{margin-top:8px;}
+  .biblio-item{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:16px;
+    padding:16px 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .biblio-item:last-child{border-bottom:1px solid var(--line-soft);}
+  .biblio-item .idx{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--moss);
+    font-size:14px;
+    padding-top:2px;
+  }
+  .biblio-item .ttl{font-size:15.5px;}
+  .biblio-item .jr{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:5px;
+    letter-spacing:0.03em;
+  }
+  .biblio-item .jr .yr{
+    color:var(--ochre-deep);
+    font-weight:600;
+  }
+  .biblio-item .jr a{
+    color:var(--moss);
+    text-decoration:underline;
+    text-underline-offset:2px;
+    margin-left:8px;
+  }
+
+  /* ---------- teaching / community ---------- */
+  .community-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    margin-top:10px;
+  }
+  .community-grid h3{font-size:20px; margin-bottom:12px;}
+  .community-grid p{color:var(--ink-soft); font-size:15.5px;}
+  .talks{margin-top:20px; padding-left:0; list-style:none;}
+  .talks li{
+    font-size:14.5px;
+    padding:10px 0;
+    border-top:1px dashed var(--line);
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    color:var(--ink-soft);
+  }
+  .talks li b{color:var(--ink); font-weight:500;}
+  @media (max-width:760px){ .community-grid{grid-template-columns:1fr;} }
+
+  /* ---------- skills ---------- */
+  .pillrow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:22px;
+  }
+  .pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.03em;
+    padding:8px 14px;
+    border:1px solid var(--moss);
+    color:var(--moss-deep);
+    border-radius:999px;
+    background:var(--paper-hi);
+  }
+
+  /* ---------- contact / footer ---------- */
+  footer{
+    background:var(--night);
+    color:var(--paper-on-night);
+    padding:90px 0 40px;
+  }
+  footer h2{
+    color:var(--paper-on-night);
+    font-size:clamp(28px,5vw,44px);
+    max-width:600px;
+  }
+  footer .email{
+    display:inline-block;
+    margin-top:28px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:18px;
+    color:#e7d9b8;
+    text-decoration:none;
+    border-bottom:1px solid #7c5215;
+    padding-bottom:4px;
+  }
+  .foot-links{
+    margin-top:60px;
+    padding-top:26px;
+    border-top:1px solid rgba(233,226,209,0.18);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:#8b8672;
+  }
+  .foot-links a{color:#c9c2ac; text-decoration:none;}
+  .foot-links a:hover{color:#e7d9b8;}
+  .foot-social{display:flex; gap:20px;}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">M<span>·</span>T·F</div>
+    <ul class="navlinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#tracks">Work</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#research">Research</a></li>
+    </ul>
+    <a class="navcta" href="mailto:matthew.t.ferreira@gmail.com">Get in touch</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="stampfield" aria-hidden="true">
+      <div class="stamp stamp-circle">
+        <div class="top-arc">EST. 2016</div>
+        <div class="big">PhD</div>
+        <div class="bottom-arc">Cell Biology</div>
+      </div>
+      <div class="stamp stamp-rect">
+        <div class="top-arc">Independent Practice</div>
+        <div class="big">Strategy</div>
+        <div class="bottom-arc">Biotech · Medtech · Neurotech</div>
+      </div>
+    </div>
+    <div class="eyebrow">A dossier in two parts</div>
+    <h1>Innovation strategist.<br>Scientific communicator.</h1>
+    <p class="lede">Matthew Ferreira builds bridges between science and strategy — translating deep research expertise into commercial outcomes for biotech, medtech, pharma, and neurotech organizations, while producing scientific work published in high-impact peer-reviewed journals worldwide.</p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="mailto:matthew.t.ferreira@gmail.com">Start a conversation</a>
+      <a class="btn-ghost" href="#tracks">See both tracks ↓</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="label-col reveal">
+        <b>Filed</b>
+        Lisbon, Portugal
+        <br><br>
+        <b>Practicing since</b>
+        2016
+        <br><br>
+        <b>Reach</b>
+        US · EU · LatAm · APAC
+      </div>
+      <div class="reveal">
+        <div class="eyebrow">About</div>
+        <p class="dropcap">Matthew T. Ferreira holds a PhD in Cell Biology from the University of São Paulo and has spent the past decade building two parallel careers that reinforce each other. As an independent innovation strategist, he advises biotech, medtech, pharma, and neurotech organizations on commercialization, market readiness, go/no-go decisions, and business development — engagements built entirely through referral. As a scientific writer and researcher, he has co-authored twelve peer-reviewed publications and supported over 120 researchers and academics with manuscript development, editing, and translation.</p>
+        <p>His most recent embedded roles — Head of Strategy &amp; Innovation at a neurotech company and Head of Commercial Development at a Barcelona biotech firm — sat within his continuous independent practice rather than as separate employment, giving him hands-on strategic leadership without stepping away from his broader client base. He holds dual US-EU citizenship, is fluent in Portuguese and English with conversational Spanish, and brings cross-cultural fluency from years of work across Brazil, Portugal, Spain, the Philippines, the US, and Switzerland.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tracks">
+  <div class="wrap">
+    <div class="eyebrow reveal">What I do</div>
+    <h2 class="reveal" style="font-size:32px; margin-bottom:8px;">Two tracks, one practice</h2>
+    <p class="reveal" style="color:var(--ink-soft); max-width:640px; margin-top:10px;">Every engagement draws on both sides of this record — the strategist's read on a market and the scientist's read on the data behind it.</p>
+
+    <div class="tracks reveal" style="margin-top:40px;">
+      <div class="track strategy">
+        <span class="tag">Exhibit A</span>
+        <h3>Strategy &amp; Consulting</h3>
+        <ul>
+          <li>Commercialization strategy &amp; market readiness</li>
+          <li>Go/no-go decision support</li>
+          <li>Business development &amp; partnership strategy</li>
+          <li>Regulatory pathway analysis (De Novo vs. PMA)</li>
+          <li>Non-dilutive funding strategy &amp; grant design</li>
+        </ul>
+        <div class="eng">
+          <b>Head of Strategy &amp; Innovation</b>
+          <a class="inline-link" href="https://www.neuradaptive.com/" target="_blank" rel="noopener">Neuradaptive</a> — psychiatric DBS technology. Investor materials, regulatory pathway analysis, and a funding program contributing to eight submissions and a successful ARPA-H award.
+          <br><br>
+          <b>Head of Commercial Development</b>
+          <a class="inline-link" href="https://sunlabs.tech/" target="_blank" rel="noopener">SunLabs by Bioinnova</a>, Barcelona — go-to-market and partnership strategy for a Swiss-backed life sciences group.
+        </div>
+        <div class="stat-row">
+          <div class="stat"><span class="num" data-target="10">0</span><span class="lab">Years practicing</span></div>
+          <div class="stat"><span class="num" data-target="20" data-suffix="+">0</span><span class="lab">Strategy clients</span></div>
+          <div class="stat"><span class="num" data-target="4">0</span><span class="lab">Regions</span></div>
+        </div>
+      </div>
+      <div class="track science">
+        <span class="tag">Fig. 1</span>
+        <h3>Science &amp; Writing</h3>
+        <ul>
+          <li>Scientific &amp; medical manuscript writing, editing, translation</li>
+          <li>Systematic reviews &amp; meta-analyses</li>
+          <li>Poster &amp; abstract preparation for conferences</li>
+          <li>Scientific communication training</li>
+          <li>Data collection &amp; analysis support</li>
+        </ul>
+        <div class="stat-row">
+          <div class="stat"><span class="num" data-target="12">0</span><span class="lab">Publications</span></div>
+          <div class="stat"><span class="num" data-target="600" data-suffix="+">0</span><span class="lab">Documents</span></div>
+          <div class="stat"><span class="num" data-target="120" data-suffix="+">0</span><span class="lab">Researchers served</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="dark">
+  <div class="wrap">
+    <div class="eyebrow reveal">The ledger</div>
+    <h2 class="reveal" style="font-size:32px;">Experience</h2>
+    <div class="ledger reveal">
+      <div class="ledger-row">
+        <div class="when">2016 — Present</div>
+        <div>
+          <h3>Independent Consulting Practice</h3>
+          <p>Innovation strategist &amp; ecosystem builder across biotech, medtech, pharma, and neurotech in the US, EU, Latin America, and APAC. Twenty-plus life science strategy clients on commercialization, market readiness, and business development.</p>
+        </div>
+      </div>
+      <div class="ledger-row">
+        <div class="when">Jul 2025 — May 2026</div>
+        <div>
+          <h3>Head of Strategy &amp; Innovation, <a href="https://www.neuradaptive.com/" target="_blank" rel="noopener">Neuradaptive</a></h3>
+          <p>Embedded engagement leading investor materials, regulatory pathway analysis, market sizing, and a twelve-channel funding program (NIH SBIR, ARPA-H, foundation grants) contributing to a successful ARPA-H award. Concluded due to manufacturing cost overruns on the client side.</p>
+        </div>
+      </div>
+      <div class="ledger-row">
+        <div class="when">Dec 2023 — Aug 2025</div>
+        <div>
+          <h3>Head of Commercial Development, <a href="https://sunlabs.tech/" target="_blank" rel="noopener">SunLabs by Bioinnova</a></h3>
+          <p>Embedded engagement in Barcelona driving commercial development and partnership strategy. Concluded due to investor withdrawal.</p>
+        </div>
+      </div>
+      <div class="ledger-row">
+        <div class="when">2016 — Present</div>
+        <div>
+          <h3>Co-Founder, Lead Scientific Writer</h3>
+          <p>Co-founded a scientific and medical writing practice offering manuscript writing, editing, translation, and communication workshops — now past 600 scientific articles and documents produced, with an expansion into clinical research support.</p>
+        </div>
+      </div>
+      <div class="ledger-row">
+        <div class="when">Aug 2019 — Oct 2022</div>
+        <div>
+          <h3>Postdoctoral Researcher, University of São Paulo</h3>
+          <p>FAPESP-funded fellowship studying HPV-16 molecular epidemiology.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <div class="eyebrow reveal">Academic record</div>
+    <h2 class="reveal" style="font-size:32px; margin-bottom:6px;">Education &amp; publications</h2>
+
+    <div class="edu-list reveal">
+      <div class="edu-item">
+        <div class="deg">PhD, Cell Biology</div>
+        <div class="inst">University of São Paulo / ICESP</div>
+        <div class="yr">2015 – 2019</div>
+      </div>
+      <div class="edu-item">
+        <div class="deg">MSc, Cell Biology</div>
+        <div class="inst">University of São Paulo</div>
+        <div class="yr">2012 – 2015</div>
+      </div>
+      <div class="edu-item">
+        <div class="deg">BS, Biology</div>
+        <div class="inst">Texas State University</div>
+        <div class="yr">2005 – 2009</div>
+      </div>
+    </div>
+
+    <div class="eyebrow reveal" style="margin-top:10px;">Peer-reviewed publications</div>
+    <div class="biblio reveal">
+      <div class="biblio-item">
+        <div class="idx">[1]</div>
+        <div><div class="ttl">Sequential HPV16 variant infections in the genital epithelium and anal canal of men</div><div class="jr"><span class="yr">2025</span> · International Journal of Cancer <a href="https://pubmed.ncbi.nlm.nih.gov/40874257/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[2]</div>
+        <div><div class="ttl">HPV-16 lineages among women in Africa: a systematic review with meta-analysis</div><div class="jr"><span class="yr">2025</span> · Systematic Reviews <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12229016/" target="_blank" rel="noopener">PMC</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[3]</div>
+        <div><div class="ttl">Transthyretin and Nutritional Status in Critically Ill Adults on Parenteral Nutrition: A Prospective Cohort Study</div><div class="jr"><span class="yr">2024</span> · Nutrients <a href="https://pubmed.ncbi.nlm.nih.gov/39125329/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[4]</div>
+        <div><div class="ttl">Human Papillomavirus 16 Lineage A Variants Associated With Persistent Genital Infections in Men: The HPV Infection in Men (HIM) Study</div><div class="jr"><span class="yr">2023</span> · Journal of Infectious Diseases <a href="https://pubmed.ncbi.nlm.nih.gov/37279655/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[5]</div>
+        <div><div class="ttl">Altered Expression of CYSLTR1 Is Associated With Adverse Clinical Outcome in Triple Negative Breast Tumors: An In Silico Approach</div><div class="jr"><span class="yr">2023</span> · European Journal of Breast Health <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10071890/" target="_blank" rel="noopener">PMC</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[6]</div>
+        <div><div class="ttl">Novel Nutraceutical (silymarin, yeast β-glucan, prebiotics, and minerals) shifts gut microbiota and restores large intestine histology of diet-induced metabolic syndrome mice</div><div class="jr"><span class="yr">2023</span> · Journal of Functional Foods <a href="https://doi.org/10.1016/j.jff.2023.105671" target="_blank" rel="noopener">DOI</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[7]</div>
+        <div><div class="ttl">Prevalence and persistence of HPV-16 molecular variants in the anal canal of men: The HIM Study</div><div class="jr"><span class="yr">2022</span> · Journal of Clinical Virology <a href="https://pubmed.ncbi.nlm.nih.gov/35334349/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[8]</div>
+        <div><div class="ttl">Genetic variants of HPV-16 and their geographical and anatomical distribution in men: A systematic review with meta-analysis</div><div class="jr"><span class="yr">2021</span> · Virology <a href="https://pubmed.ncbi.nlm.nih.gov/33770686/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[9]</div>
+        <div><div class="ttl">Cyclooxygenase Inhibition Alters Proliferative, Migratory, and Invasive Properties of Human Glioblastoma Cells In Vitro</div><div class="jr"><span class="yr">2021</span> · International Journal of Molecular Sciences <a href="https://pubmed.ncbi.nlm.nih.gov/33919029/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[10]</div>
+        <div><div class="ttl">Influence of Lipoxygenase Inhibition on Glioblastoma Cell Biology</div><div class="jr"><span class="yr">2020</span> · International Journal of Molecular Sciences <a href="https://pubmed.ncbi.nlm.nih.gov/33182324/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[11]</div>
+        <div><div class="ttl">Opposing roles of PGD2 in GBM</div><div class="jr"><span class="yr">2017</span> · Prostaglandins &amp; Other Lipid Mediators <a href="https://pubmed.ncbi.nlm.nih.gov/29042181/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[12]</div>
+        <div><div class="ttl">Is plasma selenium correlated to transthyretin levels in critically ill patients?</div><div class="jr"><span class="yr">2017</span> · Nutrición Hospitalaria <a href="https://pubmed.ncbi.nlm.nih.gov/28627187/" target="_blank" rel="noopener">PubMed</a></div></div>
+      </div>
+    </div>
+
+    <div class="eyebrow reveal" style="margin-top:50px;">Selected client &amp; collaborative research</div>
+    <div class="biblio reveal">
+      <div class="biblio-item">
+        <div class="idx">[13]</div>
+        <div><div class="ttl">Adjusting curing parameters for innovative and durable vegetable fibre-cement composites</div><div class="jr">Cement and Concrete Composites</div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[14]</div>
+        <div><div class="ttl">Eco-particleboard manufactured from chemically treated fibrous vascular tissue of açaí</div><div class="jr">Industrial Crops &amp; Products</div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[15]</div>
+        <div><div class="ttl">Intracellular peptides in cell biology and pharmacology</div><div class="jr">Biomolecules</div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[16]</div>
+        <div><div class="ttl">Co-exposure of graphene oxide with trace elements: effects on acute ecotoxicity in shrimp</div><div class="jr">Chemosphere</div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[17]</div>
+        <div><div class="ttl">Association between aerobic exercise and rosiglitazone in NAFLD in PPAR-α knockout mice</div><div class="jr">Journal of Cellular Physiology</div></div>
+      </div>
+      <div class="biblio-item">
+        <div class="idx">[18]</div>
+        <div><div class="ttl">Role of exosomal microRNAs and myomiRs in cancer cachexia-associated muscle wasting</div><div class="jr">Frontiers in Nutrition</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="community">
+  <div class="wrap">
+    <div class="eyebrow reveal">Teaching &amp; community</div>
+    <h2 class="reveal" style="font-size:32px; margin-bottom:30px;">Innovation outside the lab</h2>
+    <div class="community-grid reveal">
+      <div>
+        <h3>LEGO bricks and biology education</h3>
+        <p>His undergraduate honors thesis, developed with MIT's Dr. Kathy Vandiver, explored using LEGO bricks to teach protein structure and folding. As a teaching assistant, he extended the method using bricks, clay, and balloons to help physical therapy students model tissue types — an approach that proved especially valuable for a blind student in the course.</p>
+        <p>He also built a LEGO model of the citric acid cycle, purely as a creative exercise between experiments.</p>
+      </div>
+      <div>
+        <h3>Event coordination &amp; speaking</h3>
+        <p>Led and collaborated on a statewide cancer symposium, national and international youth conferences on leadership and spirituality, and multiple summer courses and workshops in cell biology and science communication.</p>
+        <ul class="talks">
+          <li><span>State of Longevity Medicine panel</span> <b>NFC Summit Lisbon, 2026</b></li>
+          <li><span>STEM entrepreneurship keynote</span> <b>Texas State University, 2026</b></li>
+          <li><span>Policy participant</span> <b>Atlantic Council, Washington DC, 2023</b></li>
+          <li><span>Presenter</span> <b>ISSFAL Las Vegas, 2018 · IPVC DC, 2023</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="eyebrow reveal" style="margin-top:60px;">Capabilities</div>
+    <div class="pillrow reveal">
+      <span class="pill">Innovation Strategy</span>
+      <span class="pill">Commercialization</span>
+      <span class="pill">Go/No-Go Support</span>
+      <span class="pill">Business Development</span>
+      <span class="pill">Regulatory Pathway Analysis</span>
+      <span class="pill">Non-Dilutive Funding</span>
+      <span class="pill">Scientific &amp; Medical Writing</span>
+      <span class="pill">Manuscript Editing &amp; Translation</span>
+      <span class="pill">Systematic Review &amp; Meta-Analysis</span>
+      <span class="pill">Project Management</span>
+      <span class="pill">Public Speaking</span>
+      <span class="pill">ICH GCP Certified</span>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="eyebrow reveal">Get in touch</div>
+    <h2 class="reveal">Whether it's a commercial milestone or a manuscript across the finish line — let's talk.</h2>
+    <a class="email reveal" href="mailto:matthew.t.ferreira@gmail.com">matthew.t.ferreira@gmail.com</a>
+    <div class="foot-links">
+      <span>© 2026 Matthew T. Ferreira</span>
+      <div class="foot-social">
+        <a href="https://www.linkedin.com/in/matthew-ferreira-scientific-communication/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://twitter.com/SciCommsGuy" target="_blank" rel="noopener">Twitter / X</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const countUp = (el)=>{
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    if(prefersReduced){ el.textContent = target + suffix; return; }
+    const duration = 1100;
+    const start = performance.now();
+    const step = (now)=>{
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const statIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ countUp(e.target); statIo.unobserve(e.target); }
+    });
+  }, {threshold:0.4});
+  document.querySelectorAll('.stat .num[data-target]').forEach(el=>statIo.observe(el));
+</script>
+</body>
+</html>
